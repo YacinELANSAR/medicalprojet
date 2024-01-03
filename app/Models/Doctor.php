@@ -7,34 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Doctor extends Model
 {
-    use HasFactory;
-    protected $fillable = [
-        'matricule',
-        'nom',
-        'prenom',
-        'phonenumber',
-        'genre',
-        'profileimage',
-        'description',
-        'age',
-        'adresse',
-        'speciality',
-        'email',
-        'password',
-        'departement_id',
-        'ville_id',
-        'remember_token'
+    protected $table="doctors";
+    protected $fillable=[
+        'id', 'matricule','nom','prenom','adresse','genre','profileimage','phonenumber','description','email','password','ville_id','departement_id'
     ];
-    public function departement(){
-        return $this->belongsTo(Departement::class);
-    }
-    public function ville(){
-        return $this->belongsTo(Ville::class);
-    }
-    public function reservations(){
-        return $this->belongsToMany(Client::class,'reservations','doctor_id','client_id')->withPivot(['dateTime','status']);
-    }
-    public function calendries(){
-        return $this->hasMany(Calendrier::class,'doctor_id');
-    }
+     use HasFactory;
+   
 }

@@ -4,6 +4,18 @@ use App\Http\Controllers\AuthDoctor;
 use App\Http\Controllers\CalendrierController;
 use App\Http\Controllers\DoctorController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RecherchController;
+use App\Http\Controllers\medicoController;
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
 
 Route::get('/', function () {
     return view('homepage');
@@ -32,5 +44,17 @@ Route::middleware('guest')->group(function () {
 
     Route::get('/login', [AuthDoctor::class, 'showLogin'])->name('login.show');
     Route::post('/login', [AuthDoctor::class, 'login'])->name('login.post');
+});
+Route::post('/doctorvilledeppartement',[medicoController::class,'afficherDoctor'])->name('afficherdoctor');
+Route::get('/afficherdoctor',[RecherchController::class,'afficher'])->name('afficherdoctor');
+Route::post('/rd',[RecherchController::class,'rechercher'])->name('rd');
+Route::get('/modifierc',function(){
+    return view('pagemodifierclient');
+});
+Route::get('/backtorecherche',function(){
+    return view('RECHERCHER');
+});
+Route::get('/tester', function () {
+    return view('RECHERCHER');
 });
 

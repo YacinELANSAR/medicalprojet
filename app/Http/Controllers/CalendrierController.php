@@ -26,7 +26,7 @@ class CalendrierController extends Controller
     public function create()
     {
         
-        $doctorConnecteCalendrier=Calendrier::where('doctor_id',auth()->user()->id)->get();
+        $doctorConnecteCalendrier=Calendrier::where('doctor_id',auth()->user()->id)->paginate(2);
         return view('Doctors.DoctorArea.calendrier', compact('doctorConnecteCalendrier'));
 
     }

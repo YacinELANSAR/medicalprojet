@@ -160,70 +160,54 @@
         <div class="row">
           <div class="col">
             <!-- form -->
-            <div class="container bg-light rounded table-responsive">
-              <form action="{{route('calendries.store')}}" method="post">
-                @csrf
-                <table class="table table-borderless ">
-                  <thead>
-                    <tr>
-                      <th>Sélectionner un jour</th>
-                      <th>Sélectionner un décalage</th>
-                      <th>Heure de départ</th>
-                      <th>Heure de fin</th>
-                      <th>Délai moyen de consultation</th>
-                    </tr>
+            <div class="container bg-light rounded">
+  <form action="{{ route('calendries.store') }}" method="post">
+    @csrf
+    <div class="row">
+      <div class="col-md-6">
+        <label class="form-label">Sélectionner un jour</label>
+        <input type="date" name="jour" class="form-control" required>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Sélectionner un décalage</label>
+        <select class="form-select" name="decalage" required>
+          <option value="décalage1">décalage 1</option>
+          <option value="décalage2">décalage2</option>
+        </select>
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Heure de départ</label>
+        <input class="form-control" name="hdepart" type="time" required />
+      </div>
+      <div class="col-md-6">
+        <label class="form-label">Heure de fin</label>
+        <input class="form-control" name="hfin" type="time" required />
+      </div>
+      <div class="col-md-12">
+        <label class="form-label">Délai moyen de consultation</label>
+        <select class="form-select" name="delaiconsultation" required>
+          <option value="10 Minutes">10 Minutes</option>
+          <option value="15 Minutes">15 Minutes</option>
+          <option value="20 Minutes">20 Minutes</option>
+          <option value="25 Minutes">25 Minutes</option>
+          <option value="30 Minutes">30 Minutes</option>
+          <option value="35 Minutes">35 Minutes</option>
+          <option value="40 Minutes">40 Minutes</option>
+          <option value="45 Minutes">45 Minutes</option>
+          <option value="50 Minutes">50 Minutes</option>
+          <option value="60 Minutes">60 Minutes</option>
+        </select>
+      </div>
+      <div class="col-md-12">
+        <input type="submit" value="Ajouter Calendrier" class="form-control  mt-3"  style="    background: #0A758A;color:white"  />
+      </div>
+    </div>
+  </form>
+</div>
 
-                  </thead>
-                  <tbody>
-                    <tr>
-                    </tr>
-                    <tr>
-                      <td>
-
-                        <input type="date" name="jour" class="form-control" required>
-                      </td>
-                      <td>
-                        <select class="form-select" name="decalage" required>
-                          <option value="décalage1">décalage 1</option>
-                          <option value="décalage2">décalage2</option>
-                        </select>
-                      </td>
-                      <td>
-                        <input class="form-control" name="hdepart" type="time" required />
-
-                      </td>
-                      <td>
-                        <input class="form-control" name="hfin" type="time" required />
-                      </td>
-                      <td>
-                        <select class="form-select" name="delaiconsultation" required>
-                          <option value="10 Minutes">10 Minutes</option>
-                          <option value="15 Minutes">15 Minutes</option>
-                          <option value="20 Minutes">20 Minutes</option>
-                          <option value="25 Minutes">25 Minutes</option>
-                          <option value="30 Minutes">30 Minutes</option>
-                          <option value="35 Minutes">35 Minutes</option>
-                          <option value="40 Minutes">40 Minutes</option>
-                          <option value="45 Minutes">45 Minutes</option>
-                          <option value="50 Minutes">50 Minutes</option>
-                          <option value="60 Minutes">60 Minutes</option>
-                        </select>
-                      </td>
-
-                    </tr>
-                    <tr>
-                      <td colspan="5">
-                        <input type="submit" value="Ajouter Calendrier" class="form-control" style="    background: #0A758A;color:white" />
-                      </td>
-                    </tr>
-
-                  </tbody>
-                </table>
-              </form>
-            </div>
             <!-- form -->
             <!-- affichage -->
-            <div class="container bg-light rounded">
+            <div class="container bg-light rounded ">
               <div class="table-responsive">
                 <table class="table table-striped">
                   <thead>
@@ -259,8 +243,15 @@
                       </td>
                     </tr>
                     @endforeach
+                    
+                    
                   </tbody>
                 </table>
+                <!-- pagination -->
+                <div class="container mt-3 pagination">
+                  {{$doctorConnecteCalendrier->links()}}
+                </div>
+                <!-- pagination -->
               </div>
             </div>
 

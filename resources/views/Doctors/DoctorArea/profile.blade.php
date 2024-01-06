@@ -12,21 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    <script>
-    let dropMenu = document.getElementById('drop-menu')
-    let dropItems1 = document.getElementById('drop-item1')
-    let dropItems2 = document.getElementById('drop-item2')
-    dropMenu.addEventListener('click', function() {
-      if (dropItems1.style.display === 'none' || dropItems2.style.display === 'none') {
-        dropItems1.style.display = 'block'
-        dropItems2.style.display = 'block'
-
-      } else {
-        dropItems1.style.display = 'none'
-        dropItems2.style.display = 'none'
-      }
-    })
-  </script>
+    
     <style>
         html,body{
     height: 100%;

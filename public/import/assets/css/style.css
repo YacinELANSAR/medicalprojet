@@ -495,13 +495,13 @@ h6 {
 }
 @keyframes changeBackground {
   0% {
-    background: url("../img/hero-bg.jpg") top center;
+    background: url("../img/img2.jpg") top center;
   }
   50% {
-      background: url("../img/img2.jpg") top center;
+      background: url("../img/hero-bg.jpg") top center;
   }
   100% {
-      background: url("../img/img4.jpg") top center;
+      background: url("../img/img2.jpg") top center;
   }
 }
 #hero .container {

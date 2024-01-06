@@ -8,9 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Review extends Model
 {
     use HasFactory;
+    protected $table='reviews';
     protected $fillable = [
         'commentaire',
-        'client_id'
+        'email',
+        'nom_complet'
     ];
     public function client(){
         return $this->belongsTo(Client::class);

@@ -44,7 +44,26 @@
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
  
- 
+  <style>
+  #commentForm {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+</style>
+<style>
+    .fs-2 {
+        font-size: 24px; /* Taille de la police */
+    }
+
+    .comment-icon {
+      position: relative;
+      right: 60px;
+        width: 80px; 
+        height: 80px; 
+        color: #87a8ae;
+    }
+</style>
+
 </head>
 
 <body>
@@ -415,83 +434,77 @@ Hepatology is the branch of medicine that focuses on the study, diagnosis, and t
         <div class="testimonials-slider swiper" data-aos="fade-up" data-aos-delay="100">
           <div class="swiper-wrapper">
 
-            <div class="swiper-slide">
+          @foreach ($commentaires as $comment)
+          <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
-                <img src="{{ asset('import/assets/img/testimonials/testimonials-1.jpg') }}" class="testimonial-img" alt="">
-                  <h3>Saul Goodman</h3>
-                  <h4>Ceo &amp; Founder</h4>
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Proin iaculis purus consequat sem cure digni ssim donec porttitora entum suscipit rhoncus. Accusantium quam, ultricies eget id, aliquam eget nibh et. Maecen aliquam, risus at semper.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
+                <div class="fs-2 mb-3">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="bi bi-chat-fill comment-icon" viewBox="0 0 16 16">
+        <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"></path>
+    </svg><h3>date:{{ $comment->date }}</h3>
+</div>
 
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                <img src="{{ asset('import/assets/img/testimonials/testimonials-2.jpg') }}" class="testimonial-img" alt="">
-                  <h3>Sara Wilsson</h3>
-                  <h4>Designer</h4>
+                  <h3>{{ $comment->nom_complet }}</h3>
                   <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Export tempor illum tamen malis malis eram quae irure esse labore quem cillum quid cillum eram malis quorum velit fore eram velit sunt aliqua noster fugiat irure amet legam anim culpa.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
+                    {{ $comment->commentaire }}
                   </p>
                 </div>
               </div>
-            </div><!-- End testimonial item -->
+            </div>
+            @endforeach   
 
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                <img src="{{ asset('import/assets/img/testimonials/testimonials-3.jpg') }}" class="testimonial-img" alt="">
-                  <h3>Jena Karlis</h3>
-                  <h4>Store Owner</h4>
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Enim nisi quem export duis labore cillum quae magna enim sint quorum nulla quem veniam duis minim tempor labore quem eram duis noster aute amet eram fore quis sint minim.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                <img src="{{ asset('import/assets/img/testimonials/testimonials-4.jpg') }}" class="testimonial-img" alt="">
-                  <h3>Matt Brandon</h3>
-                  <h4>Freelancer</h4>
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Fugiat enim eram quae cillum dolore dolor amet nulla culpa multos export minim fugiat minim velit minim dolor enim duis veniam ipsum anim magna sunt elit fore quem dolore labore illum veniam.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
-
-            <div class="swiper-slide">
-              <div class="testimonial-wrap">
-                <div class="testimonial-item">
-                <img src="{{ asset('import/assets/img/testimonials/testimonials-5.jpg') }}" class="testimonial-img" alt="">
-                  <h3>John Larson</h3>
-                  <h4>Entrepreneur</h4>
-                  <p>
-                    <i class="bx bxs-quote-alt-left quote-icon-left"></i>
-                    Quis quorum aliqua sint quem legam fore sunt eram irure aliqua veniam tempor noster veniam enim culpa labore duis sunt culpa nulla illum cillum fugiat legam esse veniam culpa fore nisi cillum quid.
-                    <i class="bx bxs-quote-alt-right quote-icon-right"></i>
-                  </p>
-                </div>
-              </div>
-            </div><!-- End testimonial item -->
+           
 
           </div>
           <div class="swiper-pagination"></div>
+                  <!--commentaire-->
+         <br><br>
+         <button type="submit" class="btn" id="showFormButton" onclick="comment()">Ajouter Commentaire</button><br><br>
+   
+    
+
+   <div id="commentForm" class="hidden-form">
+   
+   <div class="container">
+    <form action="{{ route('commentaires.store') }}" method="post">
+      @csrf
+      <div class="mb-3">
+      <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6"></path>
+                </svg>
+            </span>
+            <input type="text" class="form-control" placeholder="Entrer votre nom" aria-label="Input group example" aria-describedby="basic-addon1" name="nom">
+        </div>
+      </div>
+      <div class="mb-3">
+      <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-at" viewBox="0 0 16 16">
+                    <path d="M2 2a2 2 0 0 0-2 2v8.01A2 2 0 0 0 2 14h5.5a.5.5 0 0 0 0-1H2a1 1 0 0 1-.966-.741l5.64-3.471L8 9.583l7-4.2V8.5a.5.5 0 0 0 1 0V4a2 2 0 0 0-2-2zm3.708 6.208L1 11.105V5.383zM1 4.217V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v.217l-7 4.2z"></path>
+                    <path d="M14.247 14.269c1.01 0 1.587-.857 1.587-2.025v-.21C15.834 10.43 14.64 9 12.52 9h-.035C10.42 9 9 10.36 9 12.432v.214C9 14.82 10.438 16 12.358 16h.044c.594 0 1.018-.074 1.237-.175v-.73c-.245.11-.673.18-1.18.18h-.044c-1.334 0-2.571-.788-2.571-2.655v-.157c0-1.657 1.058-2.724 2.64-2.724h.04c1.535 0 2.484 1.05 2.484 2.326v.118c0 .975-.324 1.39-.639 1.39-.232 0-.41-.148-.41-.42v-2.19h-.906v.569h-.03c-.084-.298-.368-.63-.954-.63-.778 0-1.259.555-1.259 1.4v.528c0 .892.49 1.434 1.26 1.434.471 0 .896-.227 1.014-.643h.043c.118.42.617.648 1.12.648m-2.453-1.588v-.227c0-.546.227-.791.573-.791.297 0 .572.192.572.708v.367c0 .573-.253.744-.564.744-.354 0-.581-.215-.581-.8Z"></path>
+                </svg>
+            </span>
+            <input type="email" class="form-control" placeholder="Entrer votre email" aria-label="Input group example" aria-describedby="basic-addon1" name="email">
+        </div>
+      </div>
+      <div class="mb-3">
+      <div class="input-group">
+            <span class="input-group-text" id="basic-addon1">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-fill" viewBox="0 0 16 16">
+                    <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9 9 0 0 0 8 15"></path>
+                </svg>
+            </span>
+            <textarea class="form-control" placeholder="Entrer votre commentaire" name="comment" aria-label="Input group example" aria-describedby="basic-addon1"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-primary">Commenter</button>
+    </form>
+  </div>
+</div>
+
         </div>
 
       </div>

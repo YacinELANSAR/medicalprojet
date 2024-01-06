@@ -5,6 +5,11 @@
 * Author: BootstrapMade.com
 * License: https://bootstrapmade.com/license/
 */
+function comment(){
+  document.getElementById('showFormButton').addEventListener('click', function() {
+    var form = document.getElementById('commentForm');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+});}
 (function() {
   "use strict";
 

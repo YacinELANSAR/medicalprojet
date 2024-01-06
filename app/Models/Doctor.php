@@ -32,7 +32,7 @@ class Doctor extends Model
         return $this->belongsTo(Ville::class);
     }
     public function reservations(){
-        return $this->belongsToMany(Client::class,'reservations','doctor_id','client_id')->withPivot(['dateTime','status']);
+        return $this->belongsToMany(Client::class,'reservations','doctor_id','client_id')->withPivot(['date','status']);
     }
     public function calendries(){
         return $this->hasMany(Calendrier::class,'doctor_id');

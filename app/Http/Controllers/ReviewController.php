@@ -15,7 +15,8 @@ class ReviewController extends Controller
      */
     public function index()
     {
-        //
+        $commentaires=Review ::all();
+        return view('homepage',compact('commentaires'));
     }
 
     /**
@@ -25,7 +26,7 @@ class ReviewController extends Controller
      */
     public function create()
     {
-        //
+        return  view('homepage');
     }
 
     /**
@@ -36,16 +37,22 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $commentaire=new Review();
+        $commentaire->nom_complet=$request->nom;
+        $commentaire->email=$request->email;
+        $commentaire->commentaire=$request->comment;
+        $commentaire->save();
+        return redirect()->route('homepage');
     }
+    
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Review  $review
+     * @param  \App\Models\Commentaire  $commentaire
      * @return \Illuminate\Http\Response
      */
-    public function show(Review $review)
+    public function show(Commentaire $commentaire)
     {
         //
     }
@@ -53,10 +60,10 @@ class ReviewController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Review  $review
+     * @param  \App\Models\Commentaire  $commentaire
      * @return \Illuminate\Http\Response
      */
-    public function edit(Review $review)
+    public function edit(Commentaire $commentaire)
     {
         //
     }
@@ -65,10 +72,10 @@ class ReviewController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Review  $review
+     * @param  \App\Models\Commentaire  $commentaire
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Review $review)
+    public function update(Request $request, Commentaire $commentaire)
     {
         //
     }
@@ -76,10 +83,10 @@ class ReviewController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Review  $review
+     * @param  \App\Models\Commentaire  $commentaire
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Review $review)
+    public function destroy(Commentaire $commentaire)
     {
         //
     }

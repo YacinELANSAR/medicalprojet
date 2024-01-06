@@ -16,7 +16,9 @@ return new class extends Migration
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
             $table->text('commentaire');
-            $table->foreignId('client_id')->constrained('clients')->onDelete('restrict');
+            $table->string('email')->unique();
+            $table->date('date')->default(now());
+            $table->string('nom complet');           
             $table->timestamps();
         });
     }

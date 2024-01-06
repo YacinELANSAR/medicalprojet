@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile</title>
+    <title>Les rendez-vous</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,21 +12,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    <script>
-    let dropMenu = document.getElementById('drop-menu')
-    let dropItems1 = document.getElementById('drop-item1')
-    let dropItems2 = document.getElementById('drop-item2')
-    dropMenu.addEventListener('click', function() {
-      if (dropItems1.style.display === 'none' || dropItems2.style.display === 'none') {
-        dropItems1.style.display = 'block'
-        dropItems2.style.display = 'block'
-
-      } else {
-        dropItems1.style.display = 'none'
-        dropItems2.style.display = 'none'
-      }
-    })
-  </script>
     <style>
         html,body{
     height: 100%;
@@ -41,6 +26,19 @@
 .mynav{
     color: #fff;
 }
+
+    .custom-width {
+        width: 120px; 
+    }
+    #f {
+    position: absolute;
+    top: 100px;
+    right: 220px;
+}
+#res{
+  margin-left:130px;
+}
+
 
 .mynav li a {
     color: #fff;
@@ -66,9 +64,9 @@
 </head>
 <body>
     <div class="container-fluid p-0 d-flex h-100">
-        <div  id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3  text-white offcanvas-md offcanvas-start" style="width: 280px;height:176%">
+        <div  id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3  text-white offcanvas-md offcanvas-start" style="width: 280px;height:100%">
             <a href="#" class="navbar-brand">
-            <h5><i class="fas fa-user me-2"></i>{{ auth()->user()->nom }} {{ auth()->user()->prenom }}</h5>
+                <h5><i class="fas fa-user me-2"></i>{{ auth()->user()->nom }} {{ auth()->user()->prenom }}</h5>
             </a>
             <hr>
             <ul class="mynav nav nav-pills flex-column mb-auto">
@@ -90,9 +88,8 @@
                         Tous</a>
                       </li>
                       <li id="drop-item2" style="display: none;">
-                      <a href="{{route('reservation.historique')}}" class="">
                         <svg style="fill: white;" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M470.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 256 265.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160zm-352 160l160-160c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L210.7 256 73.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0z"/></svg>
-                      L'historique</a>
+                      L'historique
                     </li>
                     </ul>
                 </li>
@@ -119,17 +116,19 @@
                     </a>
                 </li>
                 <li class="nav-item mb-1">
-                    <a href="{{route('updatePassword.show')}}" class="">
+                    <a href="{{route('doctor.profile')}}" class="">
                     <svg style="fill: white;" xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/></svg>
                     Profile
                     </a>
                 </li>
                 <li class="nav-item mb-1">
-                    <a href="{{route('updatePassword.show')}}" class="">
-                    <svg style="fill:white" xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z"/></svg>                        changer mot de passe
-                    </a>
-                </li>
-                <li class="nav-item mb-1">
+          <a href="{{route('updatePassword.show')}}" class="">
+            <svg style="fill:white" xmlns="http://www.w3.org/2000/svg" height="16" width="14" viewBox="0 0 448 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.-->
+              <path d="M144 144v48H304V144c0-44.2-35.8-80-80-80s-80 35.8-80 80zM80 192V144C80 64.5 144.5 0 224 0s144 64.5 144 144v48h16c35.3 0 64 28.7 64 64V448c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V256c0-35.3 28.7-64 64-64H80z" />
+            </svg> changer mot de passe
+          </a>
+        </li>
+        <li class="nav-item mb-1">
           <a href="#" class="">
             
             <form action="{{route('logout')}}" method="post" >
@@ -158,83 +157,60 @@
                 
                 <div class="row">
                     <div class="col">
-                    <div class="container px-5">
-        <form action="{{route('doctors.update',auth()->user()->id)}}" method="POST" enctype="multipart/form-data">
-          @csrf
-          @method('put')
-          <div class="row">
-            <div class="col-md-3">
-              <label for="profileimage" class="form-label">Image de Profil</label>
-              <input type="file" class="form-control" id="profileimage" name="profileimage">
-              <img class="img-fluid" src="{{ asset($doctorConnecte->profileimage) }}" alt="telecharger un image" width="100%" height="100%">
-            </div>
-            <div class="col-md-9">
+                    <div class="container mt-3"  id="res">
+    <div class="row">
+      <div class="col-md-9">
+        <h1 style="color:#0A758A;text-align:center;">Les Rendez-vous</h1><BR><BR>
+        @if(session('message'))
+    <div class="alert alert-warning">
+        {{ session('message') }}
+    </div>
+@endif
+        <form class="form-inline mb-3" method="post" action="{{ route('reservation.filtrer') }}"  id="f" >
+    @csrf
+    <div class="input-group">
+        <input type="date" class="custom-width" id="datePicker" name="date" >
+        <div class="input-group-append">
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </div>
+    </div>
+</form>
 
-              <div class="form-floating mb-3">
-                <input class="form-control" id="nom" type="text" required name="nom" value="{{$doctorConnecte->nom}}" />
-                <label for="nom">Nom</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="prenom" type="text" name="prenom" required value="{{ $doctorConnecte->prenom }}" />
-                <label for="prenom">prenom</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="text" class="form-control" id="matricule" type="text" name="matricule" value="{{ $doctorConnecte->matricule }}" />
-                <label for="matricule">matricule</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input type="email" class="form-control" id="emailAddress" type="email" name="email" required value="{{ $doctorConnecte->email}}" />
-                <label for="emailAddress">Email Address</label>
-              </div>
-            </div>
-          </div>
-
-
-
-          <div class="form-floating mb-3">
-            <textarea class="form-control" id="description" type="text" name="description" required style="height: 10rem;" required>{{ $doctorConnecte->description}}</textarea>
-            <label for="description">description</label>
-            <div class="invalid-feedback" data-sb-feedback="description:required">description is required.</div>
-          </div>
-          <div class="form-floating mb-3">
-            <input class="form-control" id="telephone" type="text" name="phonenumber" required value="{{ $doctorConnecte->phonenumber }}" />
-            <label for="telephone">Téléphone</label>
-            <div class="invalid-feedback" data-sb-feedback="telephone:required">Téléphone is required.</div>
-          </div>
-          <div class="form-floating mb-3">
-            <input class="form-control" id="adresse" type="text" name="adresse" required value="{{ $doctorConnecte->adresse }}" />
-            <label for="adresse">Adresse</label>
-            <div class="invalid-feedback" data-sb-feedback="adresse:required">Adresse is required.</div>
-          </div>
-          <div class="form-floating mb-3">
-            <select class="form-select" id="genre" aria-label="Genre" name="genre">
-              <option value="" {{ ($doctorConnecte->genre === '') ? '' : 'selected' }}>Choisir ton genre</option>
-              <option value="m" {{ ($doctorConnecte->genre === 'm') ? 'selected' : '' }}>Masculin</option>
-              <option value="f" {{ ($doctorConnecte->genre === 'f') ? 'selected' : '' }}>Féminin</option>
-            </select>
-            <label for="genre">Genre</label>
-          </div>
-          <div class="form-floating mb-3">
-            <input class="form-control" id="departement" type="text" name="departement" disabled value="{{ $DepartementDoctorConnecte->libelle }}" />
-            <label for="departement">Departement</label>
-            <div class="invalid-feedback" data-sb-feedback="departement:required">Departement is required.</div>
-          </div>
-          <div class="form-floating mb-3">
-            <input class="form-control" id="ville" type="text" name="ville" disabled value="{{ $villeDoctorConnecte->libelle }}" />
-            <label for="ville">Ville</label>
-            <div class="invalid-feedback" data-sb-feedback="ville:required">Ville is required.</div>
-          </div>
-          <button type="submit" class="form-control" style="background: #0A758A;color:white"> <svg style="fill: white;" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg> Modifier</button>
-        </form>
-        <form action="{{route('doctor.profile.cv')}}">
-        <button  type="submit"class="form-control mt-3"  style="background: #0A758A;color:white"><svg style="fill: white;" xmlns="http://www.w3.org/2000/svg" height="16" width="16" viewBox="0 0 512 512"><!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path d="M288 32c0-17.7-14.3-32-32-32s-32 14.3-32 32V274.7l-73.4-73.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l128 128c12.5 12.5 32.8 12.5 45.3 0l128-128c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L288 274.7V32zM64 352c-35.3 0-64 28.7-64 64v32c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V416c0-35.3-28.7-64-64-64H346.5l-45.3 45.3c-25 25-65.5 25-90.5 0L165.5 352H64zm368 56a24 24 0 1 1 0 48 24 24 0 1 1 0-48z"/></svg> Télécharger cv</button>
-            
-               </form>
+        <table class="table table-bordered table-striped">
+          <thead>
+            <tr style="text-align:center;">
+              <th>Nom et Prénom</th>
+              <th>Email</th>
+              <th>Téléphone</th>
+              <th>Date</th>
+              <th>Heure</th>
+              <th>Etat</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($reservations as $reservation)
+            <tr style="text-align:center;">
+              <td>{{ $reservation->nom }}  {{ $reservation->prenom }}</td>
+              <td>{{ $reservation->email }} </td>
+              <td>{{ $reservation->telephone }} </td>
+              <td>{{ $reservation->date }}</td>
+              <td>{{ $reservation->heure }}</td>
+              <td>{{ $reservation->status }} <a href="{{ route('reservation.edit', $reservation->id) }}">
+        <i class="fa fa-pencil" aria-hidden="true"></i>
+    </a>
+</td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
       </div>
-      <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    </div>
+  </div>
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
+    <!-- end updatepassword -->
+<script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
-
                     </div>
                 </div>
             </div>
@@ -248,36 +224,35 @@
     @if ($errors->any())
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      let errorMessage = "";
-      @foreach($errors -> all() as $error)
-      errorMessage += "- {{ $error }}<br>";
-      @endforeach
+        let errorMessage = "";
+        @foreach($errors -> all() as $error)
+        errorMessage += "- {{ $error }}<br>";
+        @endforeach
 
-      Swal.fire({
-        icon: 'error',
-        title: 'Tu dois verifier les valeurs des champs...',
-        html: errorMessage,
-        confirmButtonColor: '#0A758A'
-      });
+        Swal.fire({
+            icon: 'error',
+            title: 'Tu dois verifier les valeurs des champs...',
+            html: errorMessage,
+            confirmButtonColor: '#0A758A'
+        });
     </script>
     @endif
-
+    
 
     <!-- enderrors -->
     <!-- start succes modification -->
-    @if (Session::has('success'))
+@if (Session::has('success'))
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-      Swal.fire({
-        icon: 'success',
-        title: 'congratulations',
-        text: '{{ Session::get('success')}}',
-        confirmButtonColor: '#0A758A'
-      });
+        Swal.fire({
+            icon: 'success',
+            title: 'congratulations',
+            text: '{{ Session::get('success')}}',
+            confirmButtonColor: '#0A758A'
+        });
     </script>
-    @endif
-    <!-- end succes modification -->
-    
+@endif
+<!-- end succes modification -->
 </body>
 </body>
 </html>

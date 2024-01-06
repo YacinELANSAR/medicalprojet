@@ -3,11 +3,14 @@
 use App\Http\Controllers\AuthDoctor;
 use App\Http\Controllers\CalendrierController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ReservationController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('homepage');
-})->name('homepage');
+Route::get('/', [ReviewController::class, 'index'])->name('homepage');
+Route::post('/', [ReviewController::class, 'store'])->name('commentaires.store');
+
+
 
 Route::get('/home', function () {
     return view('guest');
@@ -25,6 +28,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/doctor/updatePassword',[DoctorController::class,'ShowFormUpdatePassword'])->name('updatePassword.show');
     Route::put('/doctor/updatePassword',[DoctorController::class,'UpdatePassword'])->name('updatePassword.post');
     Route::resource('/doctor/calendries', CalendrierController::class);
+    Route::get('/doctor/reservations', [ReservationController::class, 'index'])->name('reservation.index');
+Route::post('/reservations/filtrer', [ReservationController::class, 'filtrer'])->name('reservation.filtrer');
+Route::get('/historique', [ReservationController::class, 'touReservation'])->name('reservation.historique');
+Route::get('/reservation/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservation.edit');
+Route::put('/reservation/{reservation}', [ReservationController::class, 'update'])->name('reservation.update');
+Route::get('/doctor/reservations', [ReservationController::class, 'index'])->name('reservation.index');
+Route::post('/reservations/filtrer', [ReservationController::class, 'filtrer'])->name('reservation.filtrer');
+Route::get('/historique', [ReservationController::class, 'touReservation'])->name('reservation.historique');
+Route::get('/reservation/{reservation}/edit', [ReservationController::class, 'edit'])->name('reservation.edit');
+Route::put('/reservation/{reservation}', [ReservationController::class, 'update'])->name('reservation.update');
 });
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthDoctor::class, 'showRegister'])->name('register.show');

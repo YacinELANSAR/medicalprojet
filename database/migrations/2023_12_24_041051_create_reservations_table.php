@@ -15,12 +15,14 @@ return new class extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('dateTime');
-            $table->string('status');
-            $table->foreignId('doctor_id')->constrained('doctors')->onDelete('restrict');
-            $table->foreignId('client_id')->constrained('clients')->onDelete('restrict');
+            $table->date('date');
+            $table->time('heure'); 
+            $table->string('status')->default('programmé');
+            $table->foreignId('client_id')->constrained('clients')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreignId('doctor_id')->constrained('doctors')->onDelete('cascade')->onUpdate('cascade');
             $table->timestamps();
         });
+        
     }
 
     /**

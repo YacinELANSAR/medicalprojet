@@ -21,10 +21,11 @@ return new class extends Migration
             $table->integer('age');
             $table->string('adresse');
             $table->string('email')->unique();
+            $table->string('profileimage');
             $table->string('password');
+            $table->string('codeclient')->unique();
             $table->timestamps();
 
-            
         });
     }
 

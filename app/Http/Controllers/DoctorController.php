@@ -158,7 +158,7 @@ public function UpdatePassword(Request $request)
     
         $doctorData = [
             'matricule' => $request->matricule,
-            'nom' => $request->nom,
+            'nom' => $request->firstname,
             'prenom' => $request->prenom,
             'adresse' => $request->adresse,
             'genre' => $request->genre,

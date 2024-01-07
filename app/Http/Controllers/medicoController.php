@@ -6,6 +6,11 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Client;
+use App\Models\calendries;
+use App\Models\Doctor;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+use App\Models\Calendrier; 
 
 
 class MedicoController extends Controller
@@ -20,16 +25,33 @@ class MedicoController extends Controller
         $age = $request->input('age');
         $adresse = $request->input('adresse');
         $photo_profile = $request->file('profileimage');
+        
 
-        $request->validate([
-            'nom'=> 'required|unique:Client',
-            'prenom'=> 'required|unique:Client',
-            'telephone'=>'required|regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/',
-            'email'=>'required|email',
-            'password'=>'required|min:8|confirmed',
-            'age'=>'required|max:200|string',
-            'adresse'=>'required',
-        ]);
+        $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZazertyuiopqsdfghjklmwxcvbn0123456789';
+        $matricule = '';
+        for ($i = 0; $i < 8; $i++) {
+            $matricule .= $characters[rand(0, strlen($characters) - 1)];
+        }
+
+        $length = rand(5, 10); 
+        $randstring = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randstring.= $characters[rand(0, strlen($characters) - 1)]; 
+        }
+        
+        $imageName = time().'-'.$nom.'-'.$randstring.'.'.$photo_profile->extension();
+        $photo_profile->move(public_path('users_images'),$imageName);
+
+        // $request->validate([
+        //     'nom'=> 'required|string',
+        //     'prenom'=> 'required|string',
+        //     'telephone'=>'required|regex:/^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/',
+        //     'email'=>'required|email',
+        //     'password'=>'required|min:8|confirmed',
+        //     'age'=>'required|max:200|string',
+        //     'adresse'=>'required',
+        //     'profileimage'=>'mimes:jpg,jpeg,jfif,pjpeg,pjp,png,svg|max:5050'
+        // ]);
        
         Client::create([
             'telephone'=>$phone_number,
@@ -39,9 +61,13 @@ class MedicoController extends Controller
             'age' => $age,
             'adresse' => $adresse,
             'password' => bcrypt($password),
+            'profileimage'=>$imageName,
+            'codeclient'=>$matricule,
+            
         ]);
-        return redirect()->back();
 
+        return redirect()->back();
+         
        
 
         // return redirect()->back()->with('success', 'User created successfully.');
@@ -96,4 +122,116 @@ class MedicoController extends Controller
         $test = $photo_profile->move(public_path('users_images'),$imageName);
         return dd($test);
     }
+        public function afficher_patients(Request $request)
+{
+    $users = Client::paginate(10);
+    return view('afficher_patients', compact('users'));
 }
+
+public function show_domand(){
+    $doctor = Doctor::find(1);
+    $departement = $doctor->Departement;
+    $Calendrier = $doctor->calendries;
+    $currentDate = now()->format('Y-m-d');
+    $doctorId = 1;
+    $jours = $doctor->calendries->pluck('jour')->unique()->toArray();
+
+    $dates = Calendrier::where('doctor_id', $doctorId)
+        ->where('jour', $currentDate)
+        ->first();
+    
+    $delaiConsultations = $dates ? $dates->delaiConsultation : null;
+    $delaiConsultation = substr($delaiConsultations, 0, 2);
+    $datedepart = $dates ? $dates->hdepart : null;
+    $datefin = $dates ? $dates->hfin : null;
+
+    $startDate = new \DateTime($datedepart);
+    $endDate = new \DateTime($datefin);
+
+    // Initialize an array to store the result
+    $timeIntervals = [];
+
+    // Loop to create the array of time intervals
+    while ($startDate <= $endDate) {
+        $time = $startDate->format('H:i');
+        $timeIntervals[] = $time;
+        $startDate->add(new \DateInterval('PT' . $delaiConsultation . 'M'));
+    }
+
+    // $timeIntervals now contains the array of time intervals
+    return view('show_doctor', compact('doctor', 'departement', 'Calendrier', 'datedepart', 'datefin','jours','timeIntervals'));
+    // return dd($timeIntervals);
+}
+
+
+
+
+
+
+
+public function searchPatients(Request $request)
+{
+    $query = $request->input('query');
+    $users = Client::where('nom', 'like', "$query%")
+                   ->orWhere('prenom', 'like', "$query%")
+                   ->orWhere('telephone', 'like', "$query%")
+                   ->orWhere('age', 'like', "$query%")
+                //    ->orWhere('sexe', 'like', "$query%")
+                   ->get();
+
+    $data = [];
+
+    foreach ($users as $user) {
+        $data[] = $user->nom ;
+    }
+
+    return response()->json($data);
+}
+// public function searchPatients(Request $request){
+//     if($request->ajax()){
+ 
+//         $data = Client::where('nom', 'like', "$request->search%")
+//     ->orWhere('prenom', 'like', "$request->search%")
+//     ->orWhere('telephone', 'like', "$request->search%")
+//     ->orWhere('age', 'like', "$request->search%")
+//     // ->orWhere('sexe', 'like', "$request->search%")
+//     ->get();
+
+//         $output='';
+//         if(count($data)>0){
+//             $output ='
+//                 <table class="table">
+//                 <thead>
+//                 <tr>
+//                     <th scope="col">Nom</th>
+//                     <th scope="col">Prenom</th>
+//                     <th scope="col">Tel</th>
+//                     <th scope="col">Age</th>
+//                     <th scope="col">Action</th>
+//                 </tr>
+//                 </thead>
+//                 <tbody>';
+//                     foreach($data as $row){
+//                         $output .='
+//                         <tr>
+//                         <th scope="row">'.$row->nom.'</th>
+//                         <td>'.$row->prenom.'</td>
+//                         <td>'.$row->telephone.'</td>
+//                         <td>'.$row->telephone.'</td>
+//                         <td>'.$row->age.'</td>
+//                         </tr>
+//                         ';
+//                     }
+//             $output .= '
+//                 </tbody>
+//                 </table>';
+//         }
+//         else{
+//             $output .='No results';
+//         }
+//         return dd($output);
+//     }
+// }
+
+}
+

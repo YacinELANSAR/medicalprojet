@@ -47,6 +47,7 @@ Route::get('/s/{lang?}',[medicoController::class,'afficher_searchacc'])->name('s
 Route::post('/loginv/{lang?}',[medicoController::class,'valid_login'])->name('loginv');
 
 Route::get('/Signup/{lang?}',[medicoController::class,'afficher_ins'])->name('Signup');
+Route::get('/login_client/{lang?}',[medicoController::class,'afficher_log'])->name('login_client');
 Route::post('/store',[medicoController::class,'insert_user'])->name('store');
 
 Route::get('/afficher_log/{lang?}',[medicoController::class,'afficher_log'])->name('Signin');
@@ -54,3 +55,7 @@ Route::post('/valid_login',[medicoController::class,'valid_login'])->name('valid
 
 Route::view('/doctor-area','DoctorArea');
 Route::view('/dr','account_doctor');
+Route::get('/afficher_patients',[medicoController::class,'afficher_patients'])->name('afficher_patients');
+Route::get('/client_list', [medicoController::class, 'searchPatients'])->name('searchPatients');
+
+Route::get('/show_doctor', [medicoController::class, 'show_domand'])->name('sshow _domand');

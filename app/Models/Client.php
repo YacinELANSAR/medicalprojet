@@ -16,6 +16,8 @@ class Client extends Model
         'adresse',
         'email',
         'password',
+        'profileimage',
+        'codeclient',
     ];
     protected $table = 'clients';
     public function reviews(){

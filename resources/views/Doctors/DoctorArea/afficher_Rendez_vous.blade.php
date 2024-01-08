@@ -11,7 +11,9 @@
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <link href="https://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css"/>
-html,
+</head>
+<style>
+    html,
     body {
       height: 100%;
       font-family: 'Ubuntu', sans-serif;
@@ -144,9 +146,9 @@ html,
 
 
     </div>
-</head>
+
 <div class="container mt-5 text-capitalize">
-    {{ $users->links('pagination::bootstrap-5') }}
+    {{ $demandes->links('pagination::bootstrap-5') }}
     
     <div class="mb-3">
         <label for="searchInput" class="form-label">Search for patients:</label>
@@ -164,18 +166,21 @@ html,
                          <tr>
                              <th scope="col">Nom</th>
                              <th scope="col">Prenom</th>
-                             <th scope="col">Tel</th>
-                             <th scope="col">Age</th>
+                             <th scope="col">email</th>
+                             <th scope="col">codeclient</th>
+                             <th scope="col">heure</th>
+                             <th scope="col">montant_paye</th>
                              <th scope="col">Action</th>
                          </tr>
                          </thead>
-                    @foreach ($users as $user)
+                    @foreach ($demandes as $user)
                         <tr class="user-row">
                             <td>{{ $user->nom ?? 'None' }}</td>
                             <td>{{ $user->prenom ?? 'None'}}</td>
-                            <td>{{ $user->telephone ?? 'None'}}</td>
-                            <td>{{ $user->age ?? 'None'}}</td>
-                            <td>{{ $user->sexe ?? 'None'}}</td>
+                            <td>{{ $user->email ?? 'None'}}</td>
+                            <td>{{ $user->codeclient ?? 'None'}}</td>
+                            <td>{{ $user->heure ?? 'None'}}</td>
+                            <td>{{ $user->montant_paye ?? 'None'}}</td>
                             <td> <button class="btn btn-danger"> Rendez Vous </button> </td>
                         </tr>
                     @endforeach
@@ -187,7 +192,7 @@ html,
 
 <script>
     $(document).ready(function() {
-        var availableTags = @json($users);
+        var availableTags = @json($demandes);
 
         $("#searchInput").autocomplete({
             source: availableTags,

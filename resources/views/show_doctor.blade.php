@@ -126,9 +126,10 @@
                           <div>Valable entre : </div>
                           <span class="btn btn-sm btn-outline-danger ">{{$datedepart}}</span> <span class="btn btn-sm btn-outline-danger ">{{$datefin}}</span>
       
+      
                          <div class="button mt-2 d-flex flex-row align-items-center">
       
-                          <button class="btn btn-sm btn-outline-primary w-100">contact me</button>
+                          <button class="btn btn-sm btn-outline-primary w-100" id="btn">contact me</button>
       
                              
                          </div><hr><br>
@@ -138,38 +139,64 @@
       
                           
                       </div>
-                      
+                      <script>
+                        document.addEventListener('DOMContentLoaded', function () {
+                            var button = document.getElementById('btn');
+                            var form = document.getElementById('form');
+                    
+                            button.addEventListener('click', function () {
+                                if (form.style.display === 'none' || form.style.display === '') {
+                                    form.style.display = 'block';
+                                } else {
+                                    form.style.display = 'none';
+                                }
+                            });
+                        });
+                    </script>
+                    
+                    <form action="{{ route('demande_reservation') }}" method="POST" id="form">
+                      @csrf
                       <div class="card-footer py-3 border-0" style="background-color: ;">
-        
-                        <div class="container bg-light p-1">
-                          <div class="row row-cols-2">
-                            <div class="col">
-                              <select name="" id="" class="form-select">
-                                @foreach($jours as $jour )
-                                <option value="">{{$jour}}</option>
-                                @endforeach
-                              </select>
-                            </div>
-                            <div class="col">
-                              <select name="" id="" class="form-select">
-                                @foreach($timeIntervals as $timeInterval )
-                                <option value="">{{$timeInterval}}</option>
-                                @endforeach
-                              </select>
-                            </div><br><br>
-                          </div><br>
-                          <div class="row row-cols-2">
-                            <div class="col">
-                              <p class="bg bg-body text-center">300 DH</p>
-                            </div>
-                            <div class="col">
-                              <button class="btn btn-outline-primary">Confirmer</button>
-                            </div>
+                          <div class="container bg-light p-1">
+                              <div class="row row-cols-2">
+                                  <div class="col">
+                                      <select name="jours" id="" class="form-select" onchange="location = this.value;">
+                                          @foreach($jours as $jourOption)
+                                              <option value="/show_doctor/{{ $jourOption }}" {{ $jourselected == $jourOption ? 'selected' : '' }}>
+                                                  {{ $jourOption }}
+                                              </option>
+                                          @endforeach
+                                      </select>
+                                  </div>
+                                  <div class="col">
+                                      <select name="time" id="" class="form-select">
+                                          @foreach($timeIntervals as $timeInterval)
+                                              <option value="{{ $timeInterval }}">{{ $timeInterval }}</option>
+                                          @endforeach
+                                      </select>
+                                  </div><br><br>
+                              </div><br>
+                              <div class="row row-cols-2">
+                                  <div class="col">
+                                      <p class="bg bg-body text-center">300 DH</p>
+                                  </div>
+                                  <div class="col">
+                                      <button class="btn btn-outline-primary" type="submit">Confirmer</button>
+                                  </div>
+                              </div>
+                              <div class="row">
+                                  <div class="col">
+                                      <div class="alert-info">
+                                          @if(session('msg'))
+                                              {{ session('msg') }}
+                                          @endif
+                                      </div>
+                                  </div>
+                              </div>
                           </div>
-                        </div>
-                        
-                 
-                  </div>
+                      </div>
+                  </form>
+                  
                    
                </div>
                

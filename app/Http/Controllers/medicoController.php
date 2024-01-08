@@ -11,6 +11,7 @@ use App\Models\Doctor;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Carbon;
 use App\Models\Calendrier; 
+use App\Models\demande_client; 
 
 
 class MedicoController extends Controller
@@ -100,46 +101,32 @@ class MedicoController extends Controller
     public function add_photo_profile(Request $request){
         return view('add_photo_profile');
     }
-    public function store_img(Request $request){
-        $nom = $request->name;
-        $photo_profile = $request->file('photo_profile');
-
-        $request->validate([
-            'photo_profile'=>'mimes:jpg,jpeg,jfif,pjpeg,pjp,png,svg|max:5050'
-        ]);
-        $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ$@-';
-        $length = rand(5, 10); 
-        $randstring = '';
-        for ($i = 0; $i < $length; $i++) {
-            $randstring.= $characters[rand(0, strlen($characters) - 1)]; 
-        }
-        
-        $imageName = time().'-'.$nom.'-'.$randstring.'.'.$photo_profile->extension();
-        // dd($imageName);
-        Client::create([
-            'photo_profile'=>$imageName,
-        ]);
-        $test = $photo_profile->move(public_path('users_images'),$imageName);
-        return dd($test);
-    }
-        public function afficher_patients(Request $request)
+   
+public function afficher_patients(Request $request)
 {
     $users = Client::paginate(10);
     return view('afficher_patients', compact('users'));
 }
 
-public function show_domand(){
+public function show_domand(Request $request,$jour = null){
+    $jour = $jour ?? now()->format('Y-m-d');
+    $jourselected = $request->input('jour');
     $doctor = Doctor::find(1);
     $departement = $doctor->Departement;
     $Calendrier = $doctor->calendries;
-    $currentDate = now()->format('Y-m-d');
     $doctorId = 1;
     $jours = $doctor->calendries->pluck('jour')->unique()->toArray();
 
-    $dates = Calendrier::where('doctor_id', $doctorId)
-        ->where('jour', $currentDate)
+    $datesj = Calendrier::where('doctor_id', $doctorId)
+        ->where('jour', $jour)
         ->first();
+    $datedepart_oj = $datesj ? $datesj->hdepart : null;
+    $datefin_oj = $datesj ? $datesj->hfin : null;
     
+    $dates = Calendrier::where('doctor_id', $doctorId)
+        ->where('jour', $jour)
+        ->first();
+
     $delaiConsultations = $dates ? $dates->delaiConsultation : null;
     $delaiConsultation = substr($delaiConsultations, 0, 2);
     $datedepart = $dates ? $dates->hdepart : null;
@@ -158,11 +145,31 @@ public function show_domand(){
         $startDate->add(new \DateInterval('PT' . $delaiConsultation . 'M'));
     }
 
-    // $timeIntervals now contains the array of time intervals
-    return view('show_doctor', compact('doctor', 'departement', 'Calendrier', 'datedepart', 'datefin','jours','timeIntervals'));
+    $jour = $jour ?? now()->format('Y-m-d');
+    $jourselected = $request->input('jours', $jour); // Use the default value if 'jours' is not present in the request
+    // ... (rest of your existing code)
+
+    return view('show_doctor', compact('doctor', 'departement', 'Calendrier', 'datedepart', 'datefin', 'jours', 'timeIntervals', 'jourselected'));
     // return dd($timeIntervals);
 }
+public function demande_reservation(Request $request){
+    $jour = $request->input('jours');
+    $time = $request->input('time');
+    $j = substr($jour,13);
 
+    // $request->validate([
+    //     'jour'=>'required',
+    //     'heure'=>'required',
+    // ]);
+
+    demande_client::create([
+        'jour'=> $j,
+        'heure'=>$time,
+    ]);
+    return redirect()->back()->with('msg','la demande a été validée');
+        
+    
+}
 
 
 

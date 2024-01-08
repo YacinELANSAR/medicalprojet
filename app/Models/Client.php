@@ -26,4 +26,8 @@ class Client extends Model
     public function reservations(){
         return $this->belongsToMany(Doctor::class,'reservations','doctor_id','client_id')->withPivot(['dateTime','status']);
     }
+    public function demande_client()
+    {
+        return $this->hasMany(demande_client::class);
+    }
 }

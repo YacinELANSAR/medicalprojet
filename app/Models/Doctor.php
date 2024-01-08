@@ -37,4 +37,7 @@ class Doctor extends Model
     public function calendries(){
         return $this->hasMany(Calendrier::class,'doctor_id');
     }
+    public function demande_client(){
+        return $this->hasMany(demande_client::class,'doctor_id');
+    }
 }

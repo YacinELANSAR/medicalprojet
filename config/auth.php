@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'doctor' => [
+            'driver' => 'session',
+            'provider' => 'doctors',
+            
+        ],
     ],
 
     /*
@@ -60,15 +65,12 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'doctors' => [
             'driver' => 'eloquent',
             'model' => App\Models\Doctor::class,
         ],
 
-        'users' => [
-            'driver' => 'database',
-            'table' => 'doctors',
-        ],
+        
     ],
 
     /*

@@ -132,7 +132,7 @@ class AuthDoctor extends Controller
             ])->onlyInput('email');
         }
         $remember = $request->has('remember');
-        if(Auth::attempt($credentials, $remember) ){
+        if(auth()->guard('doctor')->attempt($credentials, $remember) ){
                 $request->session()->regenerate();
                 return to_route('doctors.index');
             }
@@ -143,7 +143,7 @@ class AuthDoctor extends Controller
             Session::flush();
             $request->session()->invalidate();
             $request->session()->regenerateToken();
-            Auth::logout();
+            Auth::guard('doctor')->logout();
             return to_route('homepage')->with('success','  Vous êtes déconnecté avec succès');
         }
  

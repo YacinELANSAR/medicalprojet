@@ -63,7 +63,7 @@
     <div class="container-fluid p-0 d-flex h-100">
         <div  id="bdSidebar" class="d-flex flex-column flex-shrink-0 p-3  text-white offcanvas-md offcanvas-start" style="width: 280px;height:100%">
             <a href="#" class="navbar-brand">
-            <h5><i class="fas fa-user me-2"></i>{{ auth()->user()->nom }} {{ auth()->user()->prenom }}</h5>
+            <h5><i class="fas fa-user me-2"></i>{{ Auth::guard('doctor')->user()->nom }} {{ Auth::guard('doctor')->user()->prenom }}</h5>
             </a>
             <hr>
             <ul class="mynav nav nav-pills flex-column mb-auto">

@@ -63,23 +63,27 @@ public function ShowFormUpdatePassword()
 public function UpdatePassword(Request $request)
 {
     $request->validate([
-       
+        'currentPassword' => 'required',
         'newpassword' => 'required|min:8|max:20',
         'confirmnewpassword' => 'required|min:8|max:20',
     ]);
-    $doctor=Doctor::find(auth()->user()->id);
-    $oldpassword=$request->currentPassword;
+
+    $doctor = Doctor::find(Auth::guard('doctor')->user()->id);
+    $oldpassword = $request->currentPassword;
     $newpassword = $request->newpassword;
     $confirmnewpassword = $request->confirmnewpassword;
+
     if (Hash::check($oldpassword, $doctor->password)) {
-        if($newpassword===$confirmnewpassword  ){
-            $doctor->update(['password'=>Hash::make($newpassword)]);
+        if ($newpassword === $confirmnewpassword) {
+            $doctor->password = Hash::make($newpassword);
+            $doctor->save();
             return back()->with('success', 'Le mot de passe est modifié avec succès');
         }
-        return back()->withErrors('Le nouveau mot de passe et la confirmation ne correspondent pas');
+        return back()->withErrors(['Le nouveau mot de passe et la confirmation ne correspondent pas']);
     }
-    return back()->withErrors('Le mot de passe actuel est incorrect');
+    return back()->withErrors(['Le mot de passe actuel est incorrect']);
 }
+
 
     /**
      * Display a listing of the resource.

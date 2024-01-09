@@ -19,8 +19,9 @@ class ClientController extends Controller
 
     public function index()
     {
-      
-        return view('rechercherDoctor',compact('deparetements','villes'));
+        $departements = Departement::all();
+        $villes = Ville::all();
+        return view('client/search',compact('departements','villes'));
     }
 
     /**

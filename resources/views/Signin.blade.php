@@ -22,7 +22,7 @@
                 </div>
               
                 <div>
-                    <form class="form-horizontal" method="POST" action="{{route('login.post')}}">
+                    <form class="form-horizontal" method="POST" action="{{route('valid_login')}}">
                         @csrf
                         <div class="inputs-container">
                             <!-- -----1----- -->
@@ -80,7 +80,7 @@
                     <p>Inscrivez-vous dès maintenant pour découvrir des médecins qualifiés
                     <p>et planifiez facilement des rendez-vous!</p>
                     </p>
-                    <a href="{{route('register.show')}}"><input type="button" value="Sign up" class="btn-s" style="margin-top: 3px;"></a>
+                    <a href="{{route('Signup')}}"><input type="button" value="Sign up" class="btn-s" style="margin-top: 3px;"></a>
                 </div>
 
                 <div>

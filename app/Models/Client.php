@@ -17,6 +17,7 @@ class Client extends Model
         'email',
         'password',
     ];
+    protected $table = 'clients';
     public function reviews(){
         return $this->hasMany(Review::class,'client_id');
     }

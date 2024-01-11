@@ -27,6 +27,7 @@ return new class extends Migration
             $table->string('password');
             $table->foreignId('departement_id')->constrained('departements')->onDelete('restrict');
             $table->foreignId('ville_id')->constrained('villes')->onDelete('restrict');
+            $table->timestamp('last_seen')->nullable();
             $table->timestamps();
         });
     }

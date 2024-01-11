@@ -28,8 +28,6 @@
       list-style: none;
     }
 
-
-
     #bdSidebar {
       background: linear-gradient(-45deg, #04323B, #0A758A);
     }
@@ -143,13 +141,20 @@
           </a>
         </li>
       </ul>
-
-
     </div>
 
 <div class="container mt-5 text-capitalize">
+  <form action="{{ route('Rendez_vous') }}" method="get">
+    <select class="form-select" aria-label="Default select example" name="filter" onchange="this.form.submit()">
+        <option value="3" {{ request('filter') == 3 ? 'selected' : '' }}>De plus proche</option>
+        <option value="1" {{ request('filter') == 1 ? 'selected' : '' }}>Demain</option>
+        <option value="2" {{ request('filter') == 2 ? 'selected' : '' }}>non_valider</option>
+    </select>
+</form>
+<br>
+
     {{ $demandes->links('pagination::bootstrap-5') }}
-    
+  
     <div class="mb-3">
         <label for="searchInput" class="form-label">Search for patients:</label>
         <input type="search" class="form-control" id="searchInput" placeholder="Enter name, telephone, age, or sexe..." minlength="2" name="searche">

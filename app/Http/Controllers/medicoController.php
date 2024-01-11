@@ -13,7 +13,6 @@ use Illuminate\Support\Carbon;
 use App\Models\Calendrier; 
 use App\Models\demande_client; 
 
-
 class MedicoController extends Controller
 {
     public function insert_user(Request $request){
@@ -108,21 +107,33 @@ public function afficher_patients(Request $request)
     return view('afficher_patients', compact('users'));
 }
 
-public function show_domand(Request $request,$jour = null){
+
+public function show_domand(Request $request, $jour = null)
+{
     $jour = $jour ?? now()->format('Y-m-d');
     $jourselected = $request->input('jour');
     $doctor = Doctor::find(1);
     $departement = $doctor->Departement;
     $Calendrier = $doctor->calendries;
     $doctorId = 1;
-    $jours = $doctor->calendries->pluck('jour')->unique()->toArray();
+    $online = Doctor::pluck('last_seen');
+
+    // Get unique future dates
+    $currentDate = Carbon::now()->toDateString();
+    $jours = $doctor->calendries
+        ->pluck('jour')
+        ->unique()
+        ->filter(function ($date) use ($currentDate) {
+            return $date >= $currentDate;
+        })
+        ->toArray();
 
     $datesj = Calendrier::where('doctor_id', $doctorId)
         ->where('jour', $jour)
         ->first();
     $datedepart_oj = $datesj ? $datesj->hdepart : null;
     $datefin_oj = $datesj ? $datesj->hfin : null;
-    
+
     $dates = Calendrier::where('doctor_id', $doctorId)
         ->where('jour', $jour)
         ->first();
@@ -147,11 +158,13 @@ public function show_domand(Request $request,$jour = null){
 
     $jour = $jour ?? now()->format('Y-m-d');
     $jourselected = $request->input('jours', $jour); // Use the default value if 'jours' is not present in the request
-    // ... (rest of your existing code)
 
-    return view('show_doctor', compact('doctor', 'departement', 'Calendrier', 'datedepart', 'datefin', 'jours', 'timeIntervals', 'jourselected'));
-    // return dd($timeIntervals);
+    return view('show_doctor', compact('doctor', 'departement', 'Calendrier', 'datedepart', 'datefin', 'jours', 'timeIntervals', 'jourselected','online'));
 }
+
+
+
+
 public function demande_reservation(Request $request){
     $jour = $request->input('jours');
     $time = $request->input('time');

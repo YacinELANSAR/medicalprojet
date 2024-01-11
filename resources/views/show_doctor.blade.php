@@ -29,13 +29,13 @@
               <div class="container m-5">
                   <div class="row row-cols-auto  ">
                       <div class="col p-0 ">
-                          <img src="https://hips.hearstapps.com/hmg-prod/images/portrait-of-a-happy-young-doctor-in-his-clinic-royalty-free-image-1661432441.jpg?crop=0.66698xw:1xh;center,top&resize=1200:*"
+                        <img src="{{ asset($doctor->profileimage) }}" alt="Image Alt Text"
                           width="150px" height="150px" id="img" alt="" class="img-thumbnail"">
                       </div>
                       <div class="col-8 mt-1">
                           <div style="display: flex; gap: 10px; ">
-                              <span class="text text-dark text-capitalize text-bold"><h5>reda</h5></span>
-                              <span class="text text-dark text-capitalize text-bold"><h5>reda</h5></span>
+                              <span class="text text-dark text-capitalize text-bold"><h5>{{$doctor->nom	}}</h5></span>
+                              <span class="text text-dark text-capitalize text-bold"><h5>{{$doctor->prenom	}}</h5></span>
                             </div>
                             <div style="display: flex; gap: 10px; ">
                               <span class="text text-dark text-capitalize "><i class="fa-solid fa-star" ></i></span>
@@ -44,10 +44,10 @@
                             </div>
                             <p>{{$doctor->description}}</p>
                             <div style="display: flex; gap: 10px; ">
-                              <span class="text text-light text-capitalize ">Localisation</i></span>
-                              <span class="text text-light text-capitalize "><i class="fa-solid fa-location-dot"></i></span>
-                              <span class="text text-light text-capitalize "></i></span>
-                              <span class="text text-light text-capitalize "><i class="fa-solid fa-location-dot"></i></span>
+                              <span class="text text-light text-capitalize ">{{$doctor->ville->libelle}}</span>
+                              <span class="text text-light text-capitalize "><i class="fa-solid fa-tree-city"></i></span>
+                              <span class="text text-light text-capitalize ">{{$doctor->departement->libelle}}</span>
+                              <span class="text text-light text-capitalize "><i class="fa-solid fa-user-nurse"></i></span>
                               
                             </div>
 
@@ -112,7 +112,8 @@
                       <div class="d-flex align-items-center">
       
                           <div class="image">
-                      <img src="https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80" class="rounded" width="155" >
+                            <img src="{{ asset($doctor->profileimage) }}" alt="Image Alt Text"
+                            width="150px" height="150px" id="img" alt="" class="img-thumbnail"">
                       </div>
       
                       <div class="ml-3 w-100">
@@ -120,12 +121,39 @@
                          <h4 class="mb-0 mt-0">Alex HMorrision</h4>
                          <span>Senior Journalist</span>
       
-                         <div>Offline • 
-                          04:01 AM local time</div>
+                         @forelse ($online as $last_seen)
+                         <div>
+                             <span>{{ $last_seen >= now() ? 'Online' : 'Offline' }}</span>
+                             @if ($last_seen < now())
+                                 <span>Last seen: {{ Carbon\Carbon::parse($last_seen)->diffForHumans() }}</span>
+                             @endif
+                         </div>
+                     @empty
+                         <p>No doctors online.</p>
+                     @endforelse
+                     
+                     
 
                           <div>Valable entre : </div>
-                          <span class="btn btn-sm btn-outline-danger ">{{$datedepart}}</span> <span class="btn btn-sm btn-outline-danger ">{{$datefin}}</span>
-      
+                          <span class="btn btn-sm btn-outline-danger" id="info">{{ $datedepart ?? 'non disponible' }}</span>
+                          <span class="btn btn-sm btn-outline-danger">{{ $datefin ?? 'non disponible' }}</span>
+                          
+                          {{-- <script>
+                              document.addEventListener('DOMContentLoaded', function () {
+                                  var inf = document.getElementById('info').innerHTML;
+                                  var f = document.getElementById('form');
+                          
+                                  // Use a regular expression to check if inf is in the format 'hh:mm'
+                                  var regex = /^\d{2}:\d{2}$/;
+                          
+                                  if (inf === 'non disponible' || !regex.test(inf)) {
+                                      f.style.display = 'none';
+                                  } else {
+                                      f.style.display = 'block';
+                                  }
+                              });
+                          </script>
+                           --}}
       
                          <div class="button mt-2 d-flex flex-row align-items-center">
       
@@ -139,7 +167,7 @@
       
                           
                       </div>
-                      <script>
+                      {{-- <script>
                         document.addEventListener('DOMContentLoaded', function () {
                             var button = document.getElementById('btn');
                             var form = document.getElementById('form');
@@ -152,7 +180,7 @@
                                 }
                             });
                         });
-                    </script>
+                    </script> --}}
                     
                     <form action="{{ route('demande_reservation') }}" method="POST" id="form">
                       @csrf

@@ -62,3 +62,13 @@ Route::get('/client_list', [medicoController::class, 'searchPatients'])->name('s
 Route::get('/show_doctor/{jour?}', [medicoController::class, 'show_domand'])->name('sshow _domand');
 Route::post('/demande_reservation', [medicoController::class, 'demande_reservation'])->name('demande_reservation');
 
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

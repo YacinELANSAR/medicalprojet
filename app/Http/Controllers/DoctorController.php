@@ -82,14 +82,33 @@ public function UpdatePassword(Request $request)
     return back()->withErrors('Le mot de passe actuel est incorrect');
 }
 
-    public function Rendez_vous(){
-        // $doctorConnecte = Doctor::find(auth()->user()->id);
-        // $demandeDoctorConnecte = $doctorConnecte->demande_client;
-        // dd($demandeDoctorConnecte);
-        $demandes = demande_client::paginate(8);
-        // dd($demandes);
-        return view('Doctors.DoctorArea.afficher_Rendez_vous',compact('demandes'));
+
+
+public function Rendez_vous(Request $request) {
+    // Retrieve the selected option value from the request
+    $filter = $request->input('filter', 3); // Default to 3 if not provided
+
+    // Retrieve demandes based on the selected filter
+    switch ($filter) {
+        case 1:
+            // Logic for "Demain"
+            $demandes = demande_client::whereDate('date_demande', now()->addDay())->paginate(8);
+            break;
+
+        // case 2:
+        //     // Logic for "non_valider"
+        //     $demandes = demande_client::where('status', 'non_valider')->paginate(8);
+        //     break;
+
+        default:
+            // Logic for "De plus proche" or any other case
+            $demandes = demande_client::paginate(8);
+            break;
     }
+
+    return view('Doctors.DoctorArea.afficher_Rendez_vous', compact('demandes'));
+}
+
     /**
      * Display a listing of the resource.
      *

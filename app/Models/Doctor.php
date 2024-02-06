@@ -31,6 +31,7 @@ class Doctor extends Authenticatable
         'email',
         'departement_id',
         'ville_id',
+        'password',
        
     ];
 
@@ -52,8 +53,13 @@ class Doctor extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function getProfileimageAttribute($value){
+        return $value??'public/import/default_imgs/icon-5359553_1280.jpg';
+    }
     protected $guard='doctor';
-    
+    public function posts(){
+        return $this->hasMany(posts::class,'user_id','id');
+    }
     public function departement(){
         return $this->belongsTo(Departement::class);
     }
@@ -65,5 +71,8 @@ class Doctor extends Authenticatable
     }
     public function calendries(){
         return $this->hasMany(Calendrier::class,'doctor_id');
+    }
+    public function demande_client(){
+        return $this->hasMany(demande_client::class,'doctor_id');
     }
 }

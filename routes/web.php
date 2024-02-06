@@ -5,6 +5,7 @@ use App\Http\Controllers\CalendrierController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\medicoController;
+use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -25,6 +26,8 @@ Route::middleware('auth:doctor')->group(function () {
     Route::get('/doctor/updatePassword',[DoctorController::class,'ShowFormUpdatePassword'])->name('updatePassword.show');
     Route::put('/doctor/updatePassword',[DoctorController::class,'UpdatePassword'])->name('updatePassword.post');
     Route::resource('/doctor/calendries', CalendrierController::class);
+    Route::get('/doctor/Rendez_vous',[DoctorController::class,'Rendez_vous'])->name('Rendez_vous');
+    
 });
 Route::middleware('guest:doctor')->group(function () {
     Route::get('/register', [AuthDoctor::class, 'showRegister'])->name('register.show');
@@ -37,7 +40,7 @@ Route::group(['prefix' => 'clients'],function(){
 });
 #############################################################
 
-Route::get('/login/{lang?}',[medicoController::class,'afficher_log']);
+Route::get('/logins/{lang?}',[medicoController::class,'afficher_log']);
 
 Route::get('/s/{lang?}',[medicoController::class,'afficher_searchacc'])->name('seach_account');
 
@@ -46,8 +49,25 @@ Route::post('/loginv/{lang?}',[medicoController::class,'valid_login'])->name('lo
 Route::get('/Signup/{lang?}',[medicoController::class,'afficher_ins'])->name('Signup');
 Route::post('/store',[medicoController::class,'insert_user'])->name('store');
 
-Route::get('/afficher_log/{lang?}',[medicoController::class,'afficher_log'])->name('Signin');
+Route::get('/Signin/{lang?}',[medicoController::class,'afficher_log'])->name('Signin');
 Route::post('/valid_login',[medicoController::class,'valid_login'])->name('valid_login');
 
 Route::view('/doctor-area','DoctorArea');
 Route::view('/dr','account_doctor');
+Route::get('/afficher_patients',[medicoController::class,'afficher_patients'])->name('afficher_patients');
+Route::get('/client_list', [medicoController::class, 'searchPatients'])->name('searchPatients');
+
+Route::get('/show_doctor/{jour?}', [medicoController::class, 'show_domand'])->name('sshow _domand');
+Route::post('/demande_reservation', [medicoController::class, 'demande_reservation'])->name('demande_reservation');
+
+Route::resource('posts',PostsController::class);
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});

@@ -22,7 +22,7 @@
                 <div class="content">
                     <h3>Bienvenue sur notre plateforme </h3>
                     <p>Inscrivez-vous maintenant pour prendre rendez-vous avec nos médecins qualifiés.</p>
-                    <a href="{{route('login.show')}}"><input type="button" value="Sign in" class="btn-s"></a>
+                    <a href="{{route('Signin')}}"><input type="button" value="Sign in" class="btn-s"></a>
                 </div>
 
                 <div>

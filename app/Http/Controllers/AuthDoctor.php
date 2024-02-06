@@ -26,8 +26,8 @@ class AuthDoctor extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'firstname' => 'string|required|max:40|min:4|regex:/^[a-zA-Z]+$/',
-            'lastname' => 'required|string|max:40|min:4|regex:/^[a-zA-Z]+$/',
+            'firstname' => 'string|required|max:40|min:1',
+            'lastname' => 'required|string|max:40|min:1',
             'email' => 'required|email|unique:doctors,email',
             'phonenumber' => 'required',
             'city' => 'required',
@@ -86,7 +86,7 @@ class AuthDoctor extends Controller
             }
         }
         $doctor = Doctor::create([
-            'matricule' => '',
+            'matricule'=>'',
             'nom' => $request->firstname,
             'prenom' => $request->lastname,
             'adresse' => '',
@@ -99,9 +99,10 @@ class AuthDoctor extends Controller
             'ville_id' => $request->city,
             'password' => Hash::make($request->password),
         ]);      
+        auth()->guard('doctor')->login($doctor);
         Session::flash('success', 'Inscription réussie ! Connectez-vous maintenant.');
-
-        return redirect('login');  
+        $request->session()->regenerate();    
+        return redirect('homepage');  
     }
 
     public function showLogin(){

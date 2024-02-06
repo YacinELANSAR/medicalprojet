@@ -6,6 +6,7 @@ use App\Models\Doctor;
 use App\Models\Calendrier;
 use App\Http\Controllers\Controller;
 use App\Models\Ville;
+use App\Models\demande_client;
 use Carbon\Carbon;
 use Dompdf\Dompdf;
 use Illuminate\Http\Request;
@@ -84,7 +85,6 @@ public function UpdatePassword(Request $request)
     return back()->withErrors(['Le mot de passe actuel est incorrect']);
 }
 
-
     /**
      * Display a listing of the resource.
      *
@@ -162,7 +162,7 @@ public function UpdatePassword(Request $request)
     
         $doctorData = [
             'matricule' => $request->matricule,
-            'nom' => $request->nom,
+            'nom' => $request->firstname,
             'prenom' => $request->prenom,
             'adresse' => $request->adresse,
             'genre' => $request->genre,

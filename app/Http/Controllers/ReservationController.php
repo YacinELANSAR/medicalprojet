@@ -18,7 +18,7 @@ class ReservationController extends Controller
      */
     public function index()
 {
-    // Récupérer le médecin connecté
+    
     $doctor = Doctor::find(auth()->user()->id);
 
     $id=auth()->user()->id;
@@ -63,7 +63,11 @@ class ReservationController extends Controller
 
     public function touReservation()
     {
+        
+        $doctor = Doctor::find(auth()->user()->id);
+        $id=auth()->user()->id;
         $reservations = Reservation::join('clients', 'reservations.client_id', '=', 'clients.id')
+        ->where('reservations.doctor_id','=' ,$id)
             ->where('reservations.status', '=', 'Terminé')
             ->select('clients.*', 'reservations.*')
             ->get();
